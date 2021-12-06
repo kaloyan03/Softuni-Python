@@ -27,10 +27,18 @@ def setup(is_test = False):
         # main logic
         if player_on_turn == 1:
             player_move = player1.play_turn()
+            if not board.validate_move(player_move):
+                continue
+
+
+
             current_player_sign = player1.player_sign
             current_player_name = player1.name
         else:
             player_move = player2.play_turn()
+
+            if not board.validate_move(player_move):
+                continue
             current_player_sign = player2.player_sign
             current_player_name = player2.name
 
@@ -47,4 +55,4 @@ def setup(is_test = False):
             break
 
         player_on_turn = 1 if player_on_turn == 2 else 2
-setup(is_test=True)
+setup(is_test=False)

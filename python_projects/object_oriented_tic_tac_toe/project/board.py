@@ -14,6 +14,8 @@ class Board:
             8: [2,1],
             9: [2,2],
         }
+        self.__filled_fields = []
+
     def create_board(self):
         matrix = []
         counter = 1
@@ -31,6 +33,7 @@ class Board:
             print(' | '.join([str(el) for el in row]))
 
     def fill_field(self, field_number, player_sign):
+        self.__filled_fields.append(field_number)
         board_coord = self.__field_mapper[field_number]
         row = board_coord[0]
         col = board_coord[1]
@@ -67,3 +70,11 @@ class Board:
     def check_winner_secondary_diagonal(self):
         if self.board[0][2] == self.board[1][1] == self.board[2][0]:
             return True
+
+    def validate_move(self, field_number):
+        if (field_number in self.__filled_fields):
+            print('Number you entered is not valid, please check the table with numbers again, and select one that is valid!')
+            return False
+        return True
+
+
