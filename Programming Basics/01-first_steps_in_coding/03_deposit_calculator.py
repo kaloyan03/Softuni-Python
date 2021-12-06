@@ -1,0 +1,6 @@
+#сума = депозирана сума  + срок на депозита * ((депозирана сума * годишен лихвен процент ) / 12)
+sum_in = float(input())
+deposit_time = int(input())
+years_percent = float(input())
+sum = sum_in + deposit_time * ((sum_in * years_percent / 100) / 12)
+print(sum)
