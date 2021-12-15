@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'todo_project.todo_app',
+    'todo_project.forms_page',
 ]
 
 MIDDLEWARE = [

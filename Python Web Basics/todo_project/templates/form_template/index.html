@@ -1,0 +1,7 @@
+
+<form action="{% url 'show form' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button>Send</button>
+    <a class="btn btn-primary" href="{% url 'home page' %}">Return</a>
+</form>

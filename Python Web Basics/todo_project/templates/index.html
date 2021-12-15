@@ -60,28 +60,6 @@
 <body>
     <h1>My Todo List</h1>
 
-    <form method="POST" action="/create-todo">
-        {% csrf_token %}
-
-        <div class="todo-field">
-            <label for="title">Name</label>
-            <input type="text" name="title" id="title">
-        </div>
-
-        <div class="todo-field">
-            <label for="description">Description</label>
-            <textarea name="description" id="description"></textarea>
-        </div>
-
-        <div class="todo-field">
-            <label for="owner">Owner</label>
-            <input type="text" name="owner" id="owner">
-        </div>
-
-        <button>Create</button>
-
-    </form>
-
     {% if todos %}
         <div class="container">
         {% for todo in todos %}
