@@ -1,0 +1,8 @@
+from django import forms
+from petstagram.pets.models import Pet
+
+
+class CreatePetForm(forms.ModelForm):
+    class Meta:
+        model = Pet
+        fields = '__all__'

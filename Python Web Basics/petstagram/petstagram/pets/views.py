@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from petstagram.pets.models import Pet, Like
+from petstagram.pets.create_pet_form import CreatePetForm
 
 
 # Create your views here.
@@ -36,3 +37,30 @@ def like_pet(request, pk):
     like.save()
 
     return redirect('pet details', pet.id)
+
+
+def create_pet(request):
+    if request.method == 'GET':
+        form = CreatePetForm()
+        context = {
+            'form': form,
+        }
+
+        return render(request, 'pet_create.html', context)
+    else:
+        form = CreatePetForm(request.POST)
+        context = {
+            'form': form,
+        }
+
+        if form.is_valid():
+            form.save()
+            return redirect('list pets')
+
+
+def edit_pet(request, pk):
+    pass
+
+
+def delete_pet(request, pk):
+    pass
