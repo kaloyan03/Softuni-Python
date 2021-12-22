@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from petstagram.pets.models import Pet, Like
-from petstagram.pets.create_pet_form import CreatePetForm
+from petstagram.pets.models import Pet, Like, Comment
+from petstagram.pets.forms import CreatePetForm, EditPetForm, CommentForm
 
 
 # Create your views here.
@@ -19,10 +19,13 @@ def list_pets(request):
 def pet_details(request, pk):
     pet = Pet.objects.get(pk=pk)
     pet_likes_count = pet.like_set.count
+    comment_form = CommentForm()
 
     context = {
         "pet": pet,
         "pet_likes_count": pet_likes_count,
+        'form': comment_form,
+        'comments': pet.comment_set.all(),
     }
 
     return render(request, 'pets_details_template/index.html', context)
@@ -58,14 +61,15 @@ def create_pet(request):
 def edit_pet(request, pk):
     pet = Pet.objects.get(pk=pk)
     if request.method == 'GET':
-        form = CreatePetForm(initial=pet.__dict__)
+        form = EditPetForm(initial=pet.__dict__)
         context = {
             'form': form,
+            'pet_id': pet.id,
         }
 
         return render(request, 'pet_edit.html', context)
     else:
-        form = CreatePetForm(request.POST, instance=pet)
+        form = EditPetForm(request.POST, instance=pet)
 
         if form.is_valid():
             form.save()
@@ -85,4 +89,18 @@ def delete_pet(request, pk):
     else:
         pet.delete()
         return redirect('list pets')
+
+
+def comment_pet(request, pk):
+    pet = Pet.objects.get(pk=pk)
+    form = CommentForm(request.POST)
+
+    if form.is_valid():
+        comment = Comment(
+            comment=form.cleaned_data['comment'],
+            pet= pet,
+        )
+        comment.save()
+
+    return redirect('pet details', pet.id)
 
