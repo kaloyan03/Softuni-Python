@@ -1,0 +1,16 @@
+{% extends 'common/base.html' %}
+
+
+{% block content %}
+    <section class="login-page">
+        <h2>Login Page</h2>
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            {{ user_form }}
+            <button>Login</button>
+        </form>
+
+
+    </section>
+
+{% endblock %}
