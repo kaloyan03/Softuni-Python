@@ -2,4 +2,16 @@
 
 {% block content %}
     <h2>List todos</h2>
+
+    {% if todos %}
+        {% for todo in todos %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Title: {{ todo.title }}</h5>
+                    <p class="card-text">Description: {{ todo.description }}</p>
+                    <a href="#" class="card-link">Details</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

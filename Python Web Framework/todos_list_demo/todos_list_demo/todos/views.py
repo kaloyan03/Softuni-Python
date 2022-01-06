@@ -2,11 +2,20 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 
+
 # Create your views here.
+from todos_list_demo.todos.models import Todo
 
 
 def list_todos(request):
-    return render(request, 'todos/list_todos.html')
+    todos = Todo.objects.all()
+
+    context = {
+        'todos': todos,
+    }
+
+
+    return render(request, 'todos/list_todos.html', context)
 
 
 def my_profile(request, pk):

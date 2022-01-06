@@ -13,8 +13,11 @@ def register(request):
         profile_form = ProfileForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save(commit=False)
+            user = user_form.save()
+            profile = profile_form.save(commit=False)
+
+            profile.user = user
+            profile.save()
 
             return redirect('login')
 

@@ -8,4 +8,3 @@ urlpatterns = [
     path('logout/', views.todos_logout, name='logout')
 ]
 
-import todos_list_demo.todos_auth.signals
