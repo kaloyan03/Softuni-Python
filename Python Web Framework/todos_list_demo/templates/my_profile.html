@@ -1,10 +1,21 @@
 {% extends 'common/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/my_profile_style.css" %}">
+{% endblock %}
 
 {% block content %}
 
     <section class="my-profile-page">
-        <p>Name: {{ user.profile.id }}</p>
+        <h2 class="my-profile-page-title">My profile</h2>
 
+        <article class="my-profile-page-content">
+            <p class="my-profile-page-p">Name: {{ user.username }}</p>
+        <p class="my-profile-page-p">Age: {{ user.profile.age }}</p>
+        <p class="my-profile-page-p">Location: {{ user.profile.location }}</p>
+        <p class="my-profile-page-p">Profession: {{ user.profile.profession }}</p>
+        </article>
     </section>
 
 {% endblock %}

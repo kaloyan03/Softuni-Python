@@ -4,12 +4,13 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
-from todos_list_demo.todos_auth.forms import SignInForm, ProfileForm
+from todos_list_demo.core.forms import BootstrapFormMixin
+from todos_list_demo.todos_auth.forms import SignInForm, ProfileForm, SignUpForm
 
 
 def register(request):
     if request.method == 'POST':
-        user_form = UserCreationForm(request.POST)
+        user_form = SignUpForm(request.POST)
         profile_form = ProfileForm(request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():

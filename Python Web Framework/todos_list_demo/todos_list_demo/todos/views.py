@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from todos_list_demo.todos.forms import CreateTodoForm
 from todos_list_demo.todos.models import Todo
 
 
@@ -30,3 +31,21 @@ def my_profile(request, pk):
 
 def index(request):
     return redirect('list todos')
+
+
+def create_todo(request):
+    if request.method == 'POST':
+        form = CreateTodoForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            redirect('list todos')
+
+    else:
+        form = CreateTodoForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'todos/create_todo.html', context)
