@@ -11,6 +11,7 @@ def list_pets(request):
 
     context = {
         "pets": all_pets,
+        "current_path": request.path,
     }
 
     return render(request, 'pets_page_template/index.html', context)
@@ -26,6 +27,7 @@ def pet_details(request, pk):
         "pet_likes_count": pet_likes_count,
         'form': comment_form,
         'comments': pet.comment_set.all(),
+        "current_path": request.path,
     }
 
     return render(request, 'pets_details_template/index.html', context)
@@ -47,6 +49,7 @@ def create_pet(request):
         form = CreatePetForm()
         context = {
             'form': form,
+            "current_path": request.path,
         }
 
         return render(request, 'pet_create.html', context)
@@ -65,6 +68,7 @@ def edit_pet(request, pk):
         context = {
             'form': form,
             'pet_id': pet.id,
+            "current_path": request.path,
         }
 
         return render(request, 'pet_edit.html', context)
@@ -82,6 +86,7 @@ def delete_pet(request, pk):
     if request.method == 'GET':
         context = {
             'pet_name': pet.name,
+            "current_path": request.path,
         }
 
         return render(request, 'pet_delete.html', context)

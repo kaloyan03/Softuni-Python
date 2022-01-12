@@ -1,22 +1,54 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:2%">
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-               <a class="nav-link" href="{% url 'home page' %}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            {% if current_path == '/' %}
+                <a class="nav-link active" href="{% url 'home page' %}">Home</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'home page' %}">Home</a>
+            {% endif %}
+
+            {% if current_path == '/pets/' %}
+                <li class="nav-item active">
+                    {% else %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'list pets' %}">All Pet Photos</a>
-               </li>
+            {% endif %}
+            <a class="nav-link" href="{% url 'list pets' %}">All Pet Photos</a>
+            </li>
+            {% if current_path == '/pets/create/' %}
+                <li class="nav-item active">
+                    {% else %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'create pet' %}">Add Pet Photo</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="#">Login</a>
-               </li>
-               <li class="nav-item">
-                  <a class="nav-link" href="#">Sign Up</a>
-               </li>
-            </ul>
-         </div>
-      </nav>
+            {% endif %}
+            <a class="nav-link" href="{% url 'create pet' %}">Add Pet Photo</a>
+            </li>
+            {% if not request.user.is_authenticated %}
+                {% if current_path == '/auth/sign_in/' %}
+                    <li class="nav-item active">
+                        {% else %}
+                    <li class="nav-item">
+                {% endif %}
+            <a class="nav-link" href="{% url 'sign in' %}">Login</a>
+            </li>
+                {% if current_path == '/auth/sign_up/' %}
+                    <li class="nav-item active">
+                        {% else %}
+                    <li class="nav-item">
+                {% endif %}
+            <a class="nav-link" href="{% url 'sign up' %}">Sign Up</a>
+            </li>
+                {% else %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'sign out' %}">Logout</a>
+            </li>
+
+                <li class="nav-item" style="position: absolute; right: 40px;">
+                <a class="nav-link" href="{% url 'profile' request.user.id %}">{{ request.user }}</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
