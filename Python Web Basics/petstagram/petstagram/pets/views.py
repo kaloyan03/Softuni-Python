@@ -51,7 +51,7 @@ def create_pet(request):
 
         return render(request, 'pet_create.html', context)
     else:
-        form = CreatePetForm(request.POST)
+        form = CreatePetForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
