@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from petstagram.accounts.forms import UserProfileForm, SignInForm
 from petstagram.accounts.models import UserProfile
+from petstagram.pets.models import Pet
 
 
 def sign_up(request):
@@ -64,11 +65,26 @@ def sign_out(request):
 
 
 def profile(request, pk):
-    a = request.user
-    profile = UserProfile.objects.get(user_id=request.user.id)
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
 
-    context = {
-        'profile': profile,
-    }
+        if form.is_valid():
+            profile = UserProfile.objects.get(user_id=pk)
+            form = form.save(commit=False)
+            profile.profile_picture = form.profile_picture
+            profile.save()
+            return redirect('profile', pk)
+        return render(request, 'auth/user_profile.html')
+    else:
+        profile = UserProfile.objects.get(user_id=pk)
 
-    return render(request, 'auth/user_profile.html', context)
+        pets = Pet.objects.filter(user=request.user)
+        form = UserProfileForm()
+
+        context = {
+            'profile': profile,
+            'pets': pets,
+            'form': form,
+        }
+
+        return render(request, 'auth/user_profile.html', context)

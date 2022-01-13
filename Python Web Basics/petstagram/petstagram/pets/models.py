@@ -1,8 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
 
 # Create your models here.
 
+UserModel = get_user_model()
 
 class Pet(models.Model):
     TYPE_CHOICE_DOG = 'dog'
@@ -34,11 +36,25 @@ class Pet(models.Model):
         blank=True,
     )
 
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
+
 
 class Like(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
 
 
 class Comment(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     comment = models.TextField()
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
+

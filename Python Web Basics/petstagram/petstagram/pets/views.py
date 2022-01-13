@@ -21,6 +21,14 @@ def pet_details(request, pk):
     pet = Pet.objects.get(pk=pk)
     pet_likes_count = pet.like_set.count
     comment_form = CommentForm()
+    owner_name = pet.user
+    all_likes = Like.objects.all()
+    already_liked = False
+
+    for like in all_likes:
+        if like.pet_id == pet.id and like.user_id == request.user.id:
+            already_liked = True
+            break
 
     context = {
         "pet": pet,
@@ -28,6 +36,9 @@ def pet_details(request, pk):
         'form': comment_form,
         'comments': pet.comment_set.all(),
         "current_path": request.path,
+        "is_owner": owner_name == request.user,
+        "owner_name": owner_name,
+        "already_liked": already_liked
     }
 
     return render(request, 'pets_details_template/index.html', context)
@@ -36,10 +47,16 @@ def pet_details(request, pk):
 def like_pet(request, pk):
     pet = Pet.objects.get(pk=pk)
 
-    like = Like(
-        pet=pet
-                )
-    like.save()
+    like_object_by_user = pet.like_set.filter(user_id=request.user.id)
+
+    if not like_object_by_user:
+        like = Like(
+            pet=pet,
+            user_id=request.user.id
+            )
+        like.save()
+    else:
+        like_object_by_user.delete()
 
     return redirect('pet details', pet.id)
 
@@ -47,6 +64,7 @@ def like_pet(request, pk):
 def create_pet(request):
     if request.method == 'GET':
         form = CreatePetForm()
+
         context = {
             'form': form,
             "current_path": request.path,
@@ -57,7 +75,9 @@ def create_pet(request):
         form = CreatePetForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
+            pet = form.save(commit=False)
+            pet.user = request.user
+            pet.save()
             return redirect('list pets')
 
 
@@ -104,6 +124,7 @@ def comment_pet(request, pk):
         comment = Comment(
             comment=form.cleaned_data['comment'],
             pet= pet,
+            user_id=request.user.id,
         )
         comment.save()
 
