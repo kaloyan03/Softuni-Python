@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, FormView, CreateView
+
 from .forms import PythonCreateForm
 from .models import Python
 
@@ -13,6 +16,12 @@ def index(req):
     }
 
     return render(req, 'index.html', context)
+
+
+class Index(ListView):
+    model = Python
+    context_object_name = 'pythons'
+    template_name = 'index.html'
 
 
 def create(req):
@@ -30,3 +39,11 @@ def create(req):
             python = form.save()
             python.save()
             return redirect('index')
+
+
+class CreatePython(CreateView):
+    model = Python
+    template_name = 'create.html'
+    fields = '__all__'
+    success_url = reverse_lazy('index')
+
