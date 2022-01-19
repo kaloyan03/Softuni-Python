@@ -5,30 +5,23 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from todos_list_demo.core.forms import BootstrapFormMixin
-from todos_list_demo.todos_auth.forms import SignInForm, ProfileForm, SignUpForm
+from todos_list_demo.todos_auth.forms import SignInForm, SignUpForm
 
 
 def register(request):
     if request.method == 'POST':
         user_form = SignUpForm(request.POST)
-        profile_form = ProfileForm(request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            profile = profile_form.save(commit=False)
-
-            profile.user = user
-            profile.save()
+        if user_form.is_valid():
+            user_form.save()
 
             return redirect('login')
 
     else:
-        user_form = UserCreationForm()
-        profile_form = ProfileForm()
+        user_form = SignUpForm()
 
     context = {
         'user_form': user_form,
-        'profile_form': profile_form,
     }
 
     return render(request, 'auth/register.html', context)
