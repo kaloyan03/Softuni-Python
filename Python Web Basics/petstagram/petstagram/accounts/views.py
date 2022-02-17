@@ -3,14 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 
 # Create your views here.
-from petstagram.accounts.forms import UserProfileForm, SignInForm
+from petstagram.accounts.forms import UserProfileForm, SignInForm, SignUpForm
 from petstagram.accounts.models import UserProfile
 from petstagram.pets.models import Pet
 
 
 def sign_up(request):
     if request.method == 'POST':
-        user_form = UserCreationForm(request.POST)
+        user_form = SignUpForm(request.POST)
         profile_form = UserProfileForm(request.POST, request.FILES)
 
         if user_form.is_valid() and profile_form.is_valid():
@@ -23,8 +23,8 @@ def sign_up(request):
 
 
     else:
-        user_form = UserCreationForm
-        profile_form = UserProfileForm
+        user_form = SignUpForm()
+        profile_form = UserProfileForm()
     context = {
         "user_form": user_form,
         "profile_form": profile_form,
