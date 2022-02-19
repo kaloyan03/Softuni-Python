@@ -12,13 +12,13 @@ class MaxFileSizeValueValidator:
         self.max_size = max_size
 
     def __call__(self, value):
-        file_size_in_bytes = self.__megabytes_to_bytes(value)
-        if file_size_in_bytes > self.max_size:
+        file_size_in_bytes = value.file.size
+        if file_size_in_bytes > self.__megabytes_to_bytes(self.max_size):
             raise ValidationError(f'{self.__get_error_message()}')
 
     @staticmethod
     def __megabytes_to_bytes(value):
-        return  value * 1024 * 1024
+        return value * 1024 * 1024
 
     def __get_error_message(self):
         return f'Max file size is {self.max_size:.2f} MB'
@@ -47,13 +47,13 @@ class Profile(models.Model):
     first_name = models.CharField(
         max_length=FIRST_NAME_MAX_VALUE,
         validators=(validate_only_letters,
-                    MinLengthValidator(2))
+                    MinLengthValidator(FIRST_NAME_MIN_VALUE))
     )
 
     last_name = models.CharField(
         max_length=LAST_NAME_MAX_VALUE,
         validators=(validate_only_letters,
-                    MinLengthValidator(2))
+                    MinLengthValidator(LAST_NAME_MIN_VALUE))
 
     )
 
@@ -68,6 +68,11 @@ class Profile(models.Model):
         upload_to='profiles',
         validators=(
             MaxFileSizeValueValidator(MAX_FILE_SIZE_VALUE),
-                    )
+                    ),
+
     )
+
+    @property
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
