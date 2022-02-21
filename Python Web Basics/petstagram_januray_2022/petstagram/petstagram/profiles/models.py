@@ -68,6 +68,10 @@ class Profile(models.Model):
         blank=True,
     )
 
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
     # gender = models.Choices(
     #     choices=GENDER_CHOICES,
     # )

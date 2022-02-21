@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+from petstagram.pets.validators import MaxSizeFileInMbValidator
 from petstagram.profiles.models import Profile
 
 
@@ -34,4 +35,37 @@ class Pet(models.Model):
     user_profile = models.ForeignKey(
         Profile,
         on_delete=models.CASCADE,
+        default=1,
     )
+
+    class Meta:
+        unique_together = ('user_profile', 'name')
+
+
+class PetPhoto(models.Model):
+    photo = models.ImageField(
+        validators=(
+            MaxSizeFileInMbValidator,
+        )
+    )
+
+    tagged_pets = models.ManyToManyField(
+        Pet,
+    )
+
+    description = models.TextField(
+        null=True,
+        blank=True,
+    )
+
+    publication_date = models.DateField(
+        auto_now_add=True,
+    )
+
+    likes = models.IntegerField(
+        default=0,
+    )
+
+
+
+
