@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 # Create your models here.
@@ -38,12 +40,17 @@ class Pet(models.Model):
         default=1,
     )
 
+    @property
+    def age(self):
+        return datetime.datetime.now().year - self.birth_date.year
+
     class Meta:
         unique_together = ('user_profile', 'name')
 
 
 class PetPhoto(models.Model):
     photo = models.ImageField(
+        upload_to='pet_photos',
         validators=(
             MaxSizeFileInMbValidator,
         )
@@ -65,6 +72,7 @@ class PetPhoto(models.Model):
     likes = models.IntegerField(
         default=0,
     )
+
 
 
 

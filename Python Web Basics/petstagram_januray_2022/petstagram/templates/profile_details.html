@@ -53,18 +53,25 @@
             </div>
             <div class="d-inline p-2 w-50">
                 <div class="d-flex flex-column">
-                    <h5><u>Name:</u> Aleksandra Raykova</h5>
+                    <h5><u>Name:</u> {{ profile.full_name }} </h5>
                     <!-- If Date of Birth -->
-                    <h5><u>Birthdate:</u> July 15, 1999</h5>
+                    <h5><u>Birthdate:</u> {{ profile.birth_date}}</h5>
                     <!-- If Email -->
+                    {% if profile.email %}
                     <h5><u>Email:</u> sample@softuni.bg</h5>
+                    {% endif %}
                     <!-- If Gender is Chosen -->
+                                    {% if profile.gender %}
+
                     <h5><u>Gender:</u> female</h5>
+                {% endif %}
                     <!-- If Description -->
-                    <h5><u>Description:</u> This is my profile page</h5>
+                    {% if profile.description %}
+                <h5><u>Description:</u> This is my profile page</h5>
+                {% endif %}
                 </div>
-                <p class="mt-2">Total Images: 2</p>
-                <p class="mt-2">Total Likes: 21</p>
+                <p class="mt-2">Total Images: {{ pet_photos_count }}</p>
+                <p class="mt-2">Total Likes: {{ total_likes }}</p>
                 <a href="#" class="btn btn-primary">Edit</a>
                 <a href="#" class="btn btn-danger">Delete</a>
             </div>
@@ -74,25 +81,29 @@
 <!-- End Profile Information -->
 
 <!-- Pets Information -->
+
 <h2 class="text-center">My Pets</h2>
 <div class="container mb-4">
     <div class="d-flex justify-content-start mb-5">
+
+{% for pet_photo in pet_photos %}
+
+        {% for pet in pet_photo.tagged_pets.all %}
+
         <!-- Info for First Pet -->
         <div style="width: 18rem;">
-            <h5>Andrew</h5>
-            <p class="mt-2">Age: 3</p>
+            <h5>{{ pet.name }}</h5>
+            <p class="mt-2">Age: {{ pet.age }}</p>
             <a href="#" class="btn btn-primary">Edit</a>
             <a href="#" class="btn btn-danger">Delete</a>
         </div>
 
-        <!-- Info for Second Pet -->
-        <div style="width: 18rem;">
-            <h5>Otto</h5>
-            <a href="#" class="btn btn-primary">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
-        </div>
-    </div>
-</div>
+            {% endfor %}
+
+
+{% endfor %}
+
+
 
 <!-- Page Footer -->
 <footer class="fixed-bottom card-footer ">
