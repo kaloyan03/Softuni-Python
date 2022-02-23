@@ -1,0 +1,19 @@
+{% load profiles %}
+
+<!--navigation bar-->
+<header>
+    <nav>
+        <ul>
+            {% has_profile as hp %}
+            <li class="img"><img src="/static/images/note.png"/></li>
+            <li><a href="{% url 'home page' %}">Notes</a></li>
+            {% if hp %}
+                <li class="right">
+                    <a href="{% url 'create note' %}">Add Note</a>
+                    <a href="{% url 'show profile' %}">Profile</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+<!--end navigation bar-->
