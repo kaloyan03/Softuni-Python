@@ -1,0 +1,25 @@
+{% load profiles %}
+
+{% has_profile as hp %}
+
+<!-- Navigation Bar -->
+<nav>
+    <ul>
+        <li class="img"><img src="/static/images/dollar.png" alt="dollar"></li>
+        <li><a href="{% url 'index' %}">Expenses Tracker</a></li>
+        {% if hp %}
+            <li class="right"><a href="{% url 'show profile' %}">Profile</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<!-- End Navigation Bar -->
+
+
+{#<!-- Navigation Bar -->#}
+{#<nav>#}
+{#    <ul>#}
+{#        <li class="img"><img src="/static/images/dollar.png" alt="dollar"></li>#}
+{#        <li><a href="#">Expenses Tracker</a></li>#}
+{#    </ul>#}
+{#</nav>#}
+{#<!-- End Navigation Bar -->#}

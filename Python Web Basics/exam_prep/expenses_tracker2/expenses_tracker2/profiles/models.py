@@ -39,7 +39,6 @@ class Profile(models.Model):
     )
 
     profile_image = models.ImageField(
-        default='static/images/user.png',
         upload_to='profile_pictures',
         validators=(
             MaxFileSizeMbValidator(IMAGE_MAX_SIZE_MB),

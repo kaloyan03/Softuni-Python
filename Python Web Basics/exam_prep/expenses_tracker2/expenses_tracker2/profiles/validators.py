@@ -15,5 +15,5 @@ class MaxFileSizeMbValidator:
 
 
 def validate_only_letters(value):
-    if not value.is_alpha():
+    if value.isdigit():
         raise ValidationError('Ensure this value contains only letters.')

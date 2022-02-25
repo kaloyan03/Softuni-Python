@@ -1,1 +1,9 @@
-urlpatterns = ()
+from django.urls import path
+
+from expenses_tracker2.expenses import views
+
+urlpatterns = (
+    path('', views.create_expense, name='create expense'),
+    path('edit/<int:id>', views.edit_expense, name='edit expense'),
+    path('delete/<int:id>', views.delete_expense, name='delete expense'),
+)
