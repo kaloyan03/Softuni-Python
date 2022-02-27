@@ -23,6 +23,7 @@ class Album(models.Model):
 
     name = models.CharField(
         max_length=NAME_MAX_LENGTH,
+        unique=True,
     )
 
     artist = models.CharField(
@@ -48,3 +49,4 @@ class Album(models.Model):
             MinValueValidator(PRICE_MIN_VALUE),
         )
     )
+

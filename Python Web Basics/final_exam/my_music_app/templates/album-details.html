@@ -1,3 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 <!--Details Page-->
 <section id="detailsPage">
     <div class="wrapper">
@@ -22,10 +26,12 @@
 
             <div class="actionBtn">
                 <!-- Album Buttons -->
-                <a href="#" class="edit">Edit</a>
-                <a href="#" class="remove">Delete</a>
+                <a href="{% url 'edit album' album.id %}" class="edit">Edit</a>
+                <a href="{% url 'delete album' album.id %}" class="remove">Delete</a>
             </div>
 
         </div>
     </div>
 </section>
+
+{% endblock %}
