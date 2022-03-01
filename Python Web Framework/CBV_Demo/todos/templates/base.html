@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Todos</title>
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
+        <nav class="navigation">
+            <ul class="navigation-list">
                 <li><a href="{% url 'list todos' %}">Todos</a></li>
+                <li><a href="{% url 'create todo' %}">Create Todo</a></li>
             </ul>
         </nav>
     </header>

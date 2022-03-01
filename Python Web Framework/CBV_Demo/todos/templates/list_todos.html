@@ -5,7 +5,9 @@
     {% if todos %}
         <ul>
         {% for todo in todos %}
-           <li>{{ todo.title }}, {{ todo.description }}</li>
+           <li><p>{{ todo.title }}, {{ todo.description }}</p>
+                <a href="{% url 'todo details' todo.id %}">Details</a>
+           </li>
         {% endfor %}
         </ul>
     {% endif %}
