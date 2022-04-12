@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>List Animals</h1>
+
+<div id="root">
+
+</div>
+
+<script>
+    window.URLS = {
+        animalsAll: () => '/api/animals',
+        animalDetails: (id) => `/api/animals/${id}`,
+    }
+
+    const loadAllAnimals = () => {
+        getAllAnimals()
+            .then(animals => renderAllAnimals(animals))
+            .then(animalsList => {
+                let rootElement = document.querySelector('div#root');
+                rootElement.innerHTML = animalsList;
+            })
+    }
+
+    const renderAllAnimals = (animals) => {
+        let animalsListItems = '';
+
+        for (const animal of animals) {
+            animalsListItems += `
+            <li>
+            <a>${animal.name} - ${animal.type}</a>
+            </li>
+            `
+
+        }
+
+        return `
+        <ul>
+            ${animalsListItems}
+        </ul>
+        `;
+    }
+
+    const getAllAnimals = () => {
+        const {animalsAll} = window.URLS;
+        return fetch(animalsAll())
+            .then(body => body.json())
+    }
+
+    loadAllAnimals();
+
+</script>
+</body>
+</html>
